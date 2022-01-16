@@ -25,7 +25,7 @@ export type counter = {
 interface FireCounter {
   getCount():Promise<n|nu>;
   sendMessage(c:n):Promise<v>;
-  addCount(e:me):Promise<v>;
+  addCount(e:e):Promise<v>;
   latestCount():Promise<v>;
 }
 
@@ -52,9 +52,8 @@ class FireCounter extends React.Component implements FireCounter {
     console.log(response);
   }
 
-  addCount = async(event:me) => {
-    let count = await this.getCount(); //much faster this.state.count, but what if you are not connected to the web.
-    console.log(event.target)
+  addCount = async(event:e) => {
+    let count = await this.getCount(); //much faster this.state.count, but what if you are not connected to the web.    
     const elem = event.target as HTMLInputElement
     
     if (count === null) {
@@ -90,19 +89,16 @@ class FireCounter extends React.Component implements FireCounter {
     }
     this.setState({count:count})
   }
-
-  node_addEventListener(list:NodeListOf<HTMLElement>,event:string, fn:(e:me)=>Promise<void>){
+ 
+/*  node_addEventListener(list:NodeListOf<HTMLElement>,event:string, fn:(e:e)=>Promise<void>){
     console.log('node_addEvent')
     const arr_list = Array.from(list)
     arr_list.forEach(item=>{
-      item.addEventListener(event,ev=>{
-        const eg = ev as MouseEvent        
-        fn(eg)
-      })
+      item.addEventListener(event,ev=>fn(ev))
     })
-  }
-  //another way #2
-/*   addEventListenerList(list:HTMLCollectionOf<HTMLElement>, event:string, fn:any) {
+  } */
+
+  addEventListenerList(list:HTMLCollectionOf<HTMLElement>, event:string, fn:(e:e)=>Promise<void>) {
     console.log('HTMLCollection_addEvent')
     const arr_list = Array.from(list)
     arr_list.forEach(item=>{
@@ -110,20 +106,19 @@ class FireCounter extends React.Component implements FireCounter {
     })
   }
 
-  sample_addEventListener(elem:HTMLElement, event:string, fn:any){
+/*  sample_addEventListener(elem:HTMLElement, event:string, fn:any){
     console.log('sample_addEvent')
     elem.addEventListener(event,el=>fn(el))
   } */
 
   componentDidMount(){
-    const btns =document.querySelectorAll('.btn_main') as NodeListOf<HTMLElement>;
-    this.node_addEventListener(btns,'click',this.addCount)
+/*     const btns =document.querySelectorAll('.btn_main') as NodeListOf<HTMLElement>;
+    this.node_addEventListener(btns,'click',this.addCount) */
 
- //another way #2    
- /*   const btns = document.getElementsByClassName('btn_main') as HTMLCollectionOf<HTMLElement>;                
+   const btns = document.getElementsByClassName('btn_main') as HTMLCollectionOf<HTMLElement>;                
     this.addEventListenerList(btns,'click',this.addCount) 
     
-    const sample = document.querySelector('.btn_main') as HTMLElement
+ /*   const sample = document.querySelector('.btn_main') as HTMLElement
     this.sample_addEventListener(sample,'click',this.addCount) */
 
     this.latestCount()
