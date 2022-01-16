@@ -71,8 +71,7 @@ class FireCounter extends React.Component implements FireCounter {
         default:
           break;
        }
-       if (count%10===0 && count>0) {
-         console.log(count);
+       if (count%10===0 && count>0) {         
           this.sendMessage(count);          
        }
     }
